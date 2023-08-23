@@ -43,3 +43,44 @@ or else you can use the following code:
    </body>
 </html>
 ``` 
+
+## 2) Load data from postgresql and display it in a table
+
+```bash
+$sudo -u postgres psql
+```
+create a database
+```sql
+$ postgres=# CREATE DATABASE mydb;
+```
+use the database
+```sql
+$ postgres=# \c mydb
+```
+
+create a table
+```sql
+$ postgres=# CREATE TABLE test (id int, name varchar(20));
+```
+insert some data
+```sql
+$ postgres=# INSERT INTO test VALUES (1, 'John');
+$ postgres=# INSERT INTO test VALUES (2, 'Jane');
+```
+select data
+```sql
+$ postgres=# SELECT * FROM test;
+```
+
+exit from postgresql
+```sql
+$ postgres=# \q
+```
+
+![Alt text](image.png)
+
+```sql
+CREATE USER youruser WITH ENCRYPTED PASSWORD 'yourpass';
+GRANT ALL PRIVILEGES ON DATABASE yourdbname TO youruser;
+```
+alter user <username> with encrypted password '<password>'
