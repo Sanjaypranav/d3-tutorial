@@ -1,3 +1,5 @@
+numpy
+pandas
 Flask
 SQLAlchemy
 Flask-SQLAlchemy

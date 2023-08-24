@@ -1,5 +1,7 @@
 from flask import Flask, render_template, jsonify
 import psycopg2
+import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -21,11 +23,11 @@ def get_data():
     try:
         conn = psycopg2.connect(**db_params)
         cur = conn.cursor()
-        cur.execute("SELECT * FROM test")
+        cur.execute("SELECT * FROM mytable")
         data = cur.fetchall()
-        cur.close()
-        conn.close()
-        return jsonify(data)
+        df = pd.DataFrame(data)
+        # return jsonify(df.to_dict(orient='records'))
+        
     except Exception as e:
         return str(e), 500
 
