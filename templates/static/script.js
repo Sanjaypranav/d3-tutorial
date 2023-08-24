@@ -4,7 +4,7 @@
     const data = await response.json();
 
     const dataContainer = d3.select('#data-container');
-
+    console.log(data);
     dataContainer.selectAll('p')
         .data(data)
         .enter()
