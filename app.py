@@ -25,7 +25,21 @@ def get_data():
         cur = conn.cursor()
         cur.execute("SELECT * FROM mytable")
         data = cur.fetchall()
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(data, columns=[
+            "fixed acidity",
+            "volatile acidity",
+            "citric acid",
+            "residual sugar",
+            "chlorides",
+            "free sulfur dioxide",
+            "total sulfur dioxide",
+            "density",
+            "pH",
+            "sulphates",
+            "alcohol",
+            "quality"
+        ])
+        return df["density"].values.tolist()
         # return jsonify(df.to_dict(orient='records'))
         
     except Exception as e:

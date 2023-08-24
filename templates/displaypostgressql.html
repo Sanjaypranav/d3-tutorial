@@ -9,6 +9,7 @@
 <body>
     <h1>Data from PostgreSQL using D3.js</h1>
     <div id="data-container"></div>
+    <div id="visualization"></div>
     <script>
         // Fetch data from the API endpoint and display it in the container
         async function fetchData() {
@@ -25,14 +26,29 @@
         async function renderData() {
             const data = await fetchData();
             console.log('Data fetched:', data);
-            const dataContainer = d3.select('#data-container');
+            // const dataContainer = d3.select('#data-container');
 
-            dataContainer.selectAll('p')
-                .data(data)
-                .enter()
-                .append('p')
-                .text(d => JSON.stringify(d));
+            // dataContainer.selectAll('p')
+            //     .data(data)
+            //     .enter()
+            //     .append('p')
+            //     .text(d => JSON.stringify(d));
+            const svg = d3.select("#visualization")
+            .append("svg")
+            .attr("width", 400)
+            .attr("height", 200);
+
+            svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", (d, i) => i * 60)
+            .attr("y", d => 200 - d)
+            .attr("width", 50)
+            .attr("height", d => d)
+            .attr("fill", "steelblue");
         }
+      
 
         renderData();
     </script>
