@@ -18,6 +18,10 @@ db_params = {
 def index():
     return render_template('displaypostgressql.html')
 
+# @app.route("/nandhini")
+# def nandhini():
+#     return "Hello, World!"
+
 @app.route('/api/getData', methods=['GET'])
 def get_data():
     try:
@@ -25,7 +29,7 @@ def get_data():
         cur = conn.cursor()
         cur.execute("SELECT * FROM mytable")
         data = cur.fetchall()
-        df = pd.DataFrame(data, columns=[
+        return pd.DataFrame(data, columns=[
             "fixed acidity",
             "volatile acidity",
             "citric acid",
@@ -38,8 +42,8 @@ def get_data():
             "sulphates",
             "alcohol",
             "quality"
-        ])
-        return df["density"].values.tolist()
+        ]).to_dict(orient='records')
+         
         # return jsonify(df.to_dict(orient='records'))
         
     except Exception as e:
