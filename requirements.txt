@@ -3,3 +3,4 @@ pandas
 Flask
 SQLAlchemy
 Flask-SQLAlchemy
+uvicorn

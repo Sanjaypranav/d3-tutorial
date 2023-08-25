@@ -22,6 +22,10 @@ def index():
 # def nandhini():
 #     return "Hello, World!"
 
+# @app.route('/test')
+# def test():
+#     return render_template('displaytable.html')
+
 @app.route('/api/getData', methods=['GET'])
 def get_data():
     try:
@@ -29,7 +33,7 @@ def get_data():
         cur = conn.cursor()
         cur.execute("SELECT * FROM mytable")
         data = cur.fetchall()
-        return pd.DataFrame(data, columns=[
+        df = pd.DataFrame(data, columns=[
             "fixed acidity",
             "volatile acidity",
             "citric acid",
@@ -42,12 +46,17 @@ def get_data():
             "sulphates",
             "alcohol",
             "quality"
-        ]).to_dict(orient='records')
-         
+        ])
+        df.to_csv('data.csv', index=False)
         # return jsonify(df.to_dict(orient='records'))
+        cur.close()
+        conn.close()
+        return jsonify(data)
+    
         
     except Exception as e:
         return str(e), 500
 
+# uvicorn app:app --reload
 if __name__ == '__main__':
     app.run(debug=True)
