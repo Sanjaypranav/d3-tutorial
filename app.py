@@ -48,10 +48,10 @@ def get_data():
             "quality"
         ])
         df.to_csv('data.csv', index=False)
-        # return jsonify(df.to_dict(orient='records'))
-        cur.close()
-        conn.close()
-        return jsonify(data)
+        return jsonify(df.to_dict(orient='records'))
+        # cur.close()
+        # conn.close()
+        # return jsonify(data)
     
         
     except Exception as e:
