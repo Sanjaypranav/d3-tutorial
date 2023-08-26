@@ -3,34 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PostgreSQL Data Table</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Display Tabe</title>
+    <script src="../static/js/d3.min.js"></script>
 </head>
 <body>
     <table id="data-table">
         <thead>
-            <tr>
-                <th>Fixed Acidity</th>
-                <th>Volatile Acidity</th>
-                <!-- ... (add other column headers) ... -->
-                <th>Quality</th>
-            </tr>
+          <tr></tr>
         </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <script>
-        d3.json("/api/getData").then(function(data) {
-            var tbody = d3.select("#data-table tbody");
+        <tbody></tbody>
+      </table>
+      
+      <script>
+          function createTable(data) {
+      const tableContainer = d3.select("#data-table");
 
-            data.forEach(function(d) {
-                var row = tbody.append("tr");
-                row.append("td").text(d["fixed acidity"]);
-                row.append("td").text(d["volatile acidity"]);
-                // ... (add similar lines for other columns) ...
-                row.append("td").text(d["quality"]);
-            });
-        });
-    </script>
+      // Create table element
+      const table = tableContainer.append("table");
+
+      // Create table header
+      table.append("thead").append("tr")
+        .selectAll("th")
+        .data(data.columns)
+        .enter()
+        .append("th")
+        .text(d => d);
+
+      // Create table body
+      const tbody = table.append("tbody");
+      
+      // Create rows
+      const rows = tbody.selectAll("tr")
+        .data(data.data)
+        .enter()
+        .append("tr");
+
+      // Create cells
+      const cells = rows.selectAll("td")
+        .data(d => d)
+        .enter()
+        .append("td")
+        .text(d => d);
+    }
+
+       async function getData(){
+        const response = await fetch('/api/getData');
+        const data = await response.json();
+        console.log(data);
+        createTable(data);x
+       }
+       getData();
+        </script>
 </body>
 </html>
