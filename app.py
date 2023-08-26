@@ -25,6 +25,9 @@ def index():
 # @app.route('/test')
 # def test():
 #     return render_template('displaytable.html')
+def convert_to_list(df: pd.DataFrame):
+    data = df.values.tolist()
+    return data
 
 @app.route('/api/getData', methods=['GET'])
 def get_data():
@@ -35,8 +38,10 @@ def get_data():
         data = cur.fetchall()
         column_names = [desc[0] for desc in cur.description]  # Get column names
         
-        data_with_columns = {"columns": column_names, "data": data}
-        print(data_with_columns)
+        df = pd.DataFrame(data, columns=column_names)
+        data_with_columns = {"columns": column_names, "data": convert_to_list(df)}
+        # pd.DataFrame(data=data, columns=column_names).to_csv('data.csv', index=False)
+        # print(data_with_columns)
         return jsonify(data_with_columns)
         # df = pd.DataFrame(data, columns=[
         #     "fixed acidity",
